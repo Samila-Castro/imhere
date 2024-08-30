@@ -1,18 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import {Text, View, TextInput, TouchableOpacity, FlatList, ScrollView, FlatListComponent } from 'react-native';
+import {Text, View, Alert ,TextInput, TouchableOpacity, FlatList } from 'react-native';
 import { styles } from './styles';
 import { Participant } from '../../components/Participant';
-import { useState } from 'react';
 
 export function Home() {
   const participants = ["Samila", "Jonas", "Diego", "Rodrigo", "Roverta", "Miguel", "Fernanda", "Tiago", "Mayk Brito"];
 
   function handleParticipentAdd(){
-    console.log("Você clicou no botão de adicionar!")
+    if(participants.includes("Samila")){
+      Alert.alert("Participante existe", "Já existe um participante na lista com esse nome." )
+    }
   };
 
-  function handleParticipentRemove(){
-    
+  function handleParticipentRemove(name: string){
+    Alert.alert("Remover participante", `Remover o participante ${name}?`, [
+      {
+        text: "sim",
+        onPress: () => Alert.alert("Deletado!")
+      },
+      {
+        text: "não",
+        style: "cancel"
+      }
+    ]);
   };
   return (
     <View style={styles.container}>
@@ -27,6 +36,7 @@ export function Home() {
           style={styles.input}
           placeholder="Nome do participante"
           placeholderTextColor="#6B6B6B"
+          
         />
         <TouchableOpacity style={styles.button} onPress={handleParticipentAdd}>
           <Text style={styles.buttonText}>
@@ -41,7 +51,7 @@ export function Home() {
           <Participant
             key={item}
             name={item}
-            onRemove={() => handleParticipentRemove}
+            onRemove={() => handleParticipentRemove(item)}
           />
         )}
         showsVerticalScrollIndicator={false}
