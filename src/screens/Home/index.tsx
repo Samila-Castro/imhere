@@ -7,7 +7,6 @@ interface Participants {
   name: string
 }
 export function Home() {
-  //const participants = ["Samila", "Jonas", "Diego", "Rodrigo", "Roverta", "Miguel", "Fernanda", "Tiago", "Mayk Brito"];
   const [participants, setParticipants] = useState<Participants[]>([]);
   const [name, setName] = useState("");
 
