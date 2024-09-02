@@ -3,17 +3,28 @@ import { styles } from './styles';
 import { Participant } from '../../components/Participant';
 import { useState } from 'react';
 
+interface Participants {
+  name: string
+}
 export function Home() {
-  const participants = ["Samila", "Jonas", "Diego", "Rodrigo", "Roverta", "Miguel", "Fernanda", "Tiago", "Mayk Brito"];
-  
+  //const participants = ["Samila", "Jonas", "Diego", "Rodrigo", "Roverta", "Miguel", "Fernanda", "Tiago", "Mayk Brito"];
+  const [participants, setParticipants] = useState<Participants[]>([]);
   const [name, setName] = useState("");
 
-  function handleParticipentAdd(name: string){
-    if(participants.includes(name)){
-      Alert.alert("Participante existe", "Já existe um participante na lista com esse nome." )
+  function handleParticipentAdd(name: string){                                         
+    if(participants.some(participant => participant.name === name)){
+      return Alert.alert("Participante existe", "Já existe um participante na lista com esse nome." )
     }
-  };
 
+    const newParticipant = {
+      name: name,               
+    }
+
+    setParticipants(prevState => [...prevState, newParticipant])
+    setName("");
+
+  };
+  
   function handleParticipentRemove(name: string){
     Alert.alert("Remover participante", `Remover o participante ${name}?`, [
       {
@@ -51,12 +62,12 @@ export function Home() {
       </View>
       <FlatList
         data={participants}
-        keyExtractor={item => item}
+        keyExtractor={item => item.name}
         renderItem={({item}) => (
           <Participant
-            key={item}
-            name={item}
-            onRemove={() => handleParticipentRemove(item)}
+            key={item.name}
+            name={item.name}
+            onRemove={() => handleParticipentRemove(item.name)}
           />
         )}
         showsVerticalScrollIndicator={false}
