@@ -24,17 +24,21 @@ export function Home() {
 
   };
   
-  function handleParticipentRemove(name: string){
+  function handleParticipentRemove(name: string){  
     Alert.alert("Remover participante", `Remover o participante ${name}?`, [
       {
         text: "sim",
-        onPress: () => Alert.alert("Deletado!")
+        onPress: () => setParticipants(prevState => prevState.filter(participant => participant.name !== name))
       },
       {
         text: "não",
         style: "cancel"
       }
     ]);
+
+
+
+    
   };
   return (
     <View style={styles.container}>
